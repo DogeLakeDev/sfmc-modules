@@ -2,15 +2,17 @@
   "name": "sfmc-modules",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.8.0",
   "description": "SFMC pure module metadata registry index",
   "license": "AGPL-3.0-only",
+  "repository": "git+https://github.com/Tanya7z/sfmc-modules.git",
   "engines": {
     "node": ">=22.13.0"
   },
   "scripts": {
     "build": "node tools/build-index.mjs",
     "verify": "node tools/verify.mjs",
-    "test": "npm run verify"
+    "test": "pnpm run verify"
   },
   "devDependencies": {
     "ajv": "^8.17.1",

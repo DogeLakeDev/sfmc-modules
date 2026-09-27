@@ -8,7 +8,7 @@ on:
       - 'schemas/**'
       - 'tools/**'
       - 'package.json'
-      - 'package-lock.json'
+      - 'pnpm-lock.yaml'
       - '.github/workflows/build-index.yml'
   workflow_dispatch:
 
@@ -29,10 +29,14 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.8.0
+          run_install: false
       - uses: actions/setup-node@v7
         with:
           node-version: '22'
-          cache: npm
+          cache: pnpm
       - name: Build and publish from latest main
         shell: bash
         run: |
@@ -43,9 +47,9 @@ jobs:
             # 每次基于最新 main 重建，避免并发合并使旧索引覆盖新分片。
             git fetch origin main
             git checkout -B registry-index origin/main
-            npm ci
-            npm run verify
-            npm run build
+            pnpm install --frozen-lockfile
+            pnpm run verify
+            pnpm run build
             if git diff --quiet -- index.json; then
               echo 'index.json is already up to date'
               exit 0

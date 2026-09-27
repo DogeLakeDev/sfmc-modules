@@ -5,8 +5,8 @@
 ## 1. 先发布模块
 
 1. 准备符合 SFMC 模块契约的 npm 包，在独立仓中完成测试和打包。
-2. 先将所收录的精确版本公开发布到 `registry.npmjs.org`。Scoped 包首次发布时通常使用 `npm publish --access public`。
-3. 检查发布结果，例如 `npm view @your-scope/module-example@1.0.0 name version --registry=https://registry.npmjs.org`。
+2. 先将所收录的精确版本公开发布到 `registry.npmjs.org`。Scoped 包首次发布时通常使用 `pnpm publish --access public`。
+3. 检查发布结果，例如 `pnpm view @your-scope/module-example@1.0.0 name version --registry=https://registry.npmjs.org`。
 4. 核实许可证、SDK 兼容范围、模块 ID 和真实依赖，不要使用本地 `file:`、workspace 路径、未发布版本或 npm dist-tag 代替版本号。
 
 初始化的 19 个官方模块在 2026-09-05 的公共源检查中均返回 404；其本地元数据已经收录，公共发布仍待完成。这是迁移状态说明，第三方新增收录仍须先完成公开发布。
@@ -62,19 +62,19 @@
 使用 Node.js >= 22.13.0，在仓库根目录运行：
 
 ```bash
-npm ci
-npm run verify
-npm run verify -- --network
-npm test
+pnpm install --frozen-lockfile
+pnpm run verify
+pnpm run verify --network
+pnpm test
 ```
 
-`npm install` 也可安装工具；CI 使用锁文件驱动的 `npm ci` 保证一致性。`npm test` 按标准脚本调用 `npm run verify`。
+CI 使用锁文件驱动的 `pnpm install --frozen-lockfile` 保证依赖一致性。`pnpm test` 按标准脚本调用 `pnpm run verify`。
 
 默认校验离线执行，检查每个分片、文件名、ID 唯一性、依赖及待生成索引的 Schema。`--network` 检查全部清单对应的精确 npm 版本，验证响应的包名与版本；404、超时、服务端错误、非法响应或包名/版本不符均返回非零退出码。请求固定发送到公共 npm 源，最多并发 4 个，每个超时 15 秒。
 
 向 `main` 提交 PR：通常只添加或更新你自己的 `modules/<id>.json`。PR 说明提供模块源码地址、npm 包和版本、许可证、SDK 兼容性及校验结果。更新已有模块同样须先发布新版本，再更新清单。
 
-**不要把生成的 `index.json` 加入常规模块 PR。** 如需本地预览，可运行 `npm run build`，但只暂存自己的分片。验证不会要求现有聚合索引与分片相等，因此多个作者无需争抢同一聚合文件。PR 门禁还运行 `node --test` 和一次实际构建。
+**不要把生成的 `index.json` 加入常规模块 PR。** 如需本地预览，可运行 `pnpm run build`，但只暂存自己的分片。验证不会要求现有聚合索引与分片相等，因此多个作者无需争抢同一聚合文件。PR 门禁还运行 `node --test` 和一次实际构建。
 
 ## 5. 合并后发布与维护
 
