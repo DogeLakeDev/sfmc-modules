@@ -14,7 +14,7 @@ sfmc mod install afk
 sfmc mod install <id>
 ```
 
-**Bootstrap status, 2026-09-05:** All 19 manifests use version `0.2.0`, SDK range `>=0.2.0`, and ISC licensing verified against the independent local module repositories. The public npm registry returned HTTP 404 for all 19 packages during initialization. Public installation remains pending publication and a successful network check. Unverified repository URLs and author fields are omitted.
+**Before stable publication, 2026-09-27:** The 19 manifests remain a candidate index. Verification of every exact package version against the public registry currently returns 404, so these entries do not establish that the modules are installable. The versions listed for `activity-log`, `data-backup`, and `qq-link` differ from their module repositories' current `package.json` values. Publish the modules first, align each entry to the published version, run `pnpm run verify --network`, and update this note. Unverified repository URLs and author fields are omitted.
 
 See the [19-module catalog](README.md#官方模块19) for descriptions and dependencies. Package names follow `@sfmc-bds/module-<id>`. Retired `tps` and `scoreboard-sync`, and deferred `daily-task`, are excluded.
 
@@ -23,11 +23,11 @@ See the [19-module catalog](README.md#官方模块19) for descriptions and depen
 Node.js >= 22.13.0 is required. The only direct dependencies are Ajv, ajv-formats, and semver; no SDK checkout or workspace is needed.
 
 ```bash
-npm ci
-npm run verify
-npm test
-npm run verify -- --network
-npm run build
+pnpm install --frozen-lockfile
+pnpm run verify
+pnpm test
+pnpm run verify --network
+pnpm run build
 node --test
 ```
 

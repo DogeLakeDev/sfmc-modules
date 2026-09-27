@@ -18,7 +18,7 @@ sfmc mod install <id>
 
 CLI 从 [main/index.json](https://raw.githubusercontent.com/Tanya7z/sfmc-modules/main/index.json) 发现模块，读取 `npm`、`version`、`sdk` 并优先使用 npm 安装。依赖和启用行为由现行 CLI 与模块运行时契约负责，索引本身不执行模块代码。
 
-**初始化发布状态（2026-09-05）：** 以下 19 个清单的版本 `0.2.0`、SDK 范围 `>=0.2.0` 与 ISC 许可证均核对自独立模块仓。初始化时公共 npm 源对这些包均返回 HTTP 404；清单已就绪，但尚不能据此宣称可从公共 npm 安装。维护者须完成公开发布并运行联网校验后更新此说明。未能核实的仓库 URL 与作者字段暂不填写。
+**正式发布前状态（2026-09-27）：** 以下 19 个清单仍是候选索引，公共 registry 的精确版本联网校验目前全部返回 404，不能据此宣称模块可安装。其中 `activity-log`、`data-backup`、`qq-link` 的清单版本与模块仓当前 `package.json` 不一致。维护者须先发布各模块，再逐项对齐已发布的精确版本、运行 `pnpm run verify --network` 并更新此说明。未能核实的仓库 URL 与作者字段暂不填写。
 
 ## 官方模块（19）
 
@@ -43,6 +43,7 @@ CLI 从 [main/index.json](https://raw.githubusercontent.com/Tanya7z/sfmc-modules
 | [online-time](modules/online-time.json) | 在线时长统计 | utility | 进服打点与心跳增量结转在线统计与多维排行榜 | — |
 | [peace-area](modules/peace-area.json) | 和平区域 | gameplay | 区域怪物生成拦截与和平空间保护（友好生物豁免） | area |
 | [qa](modules/qa.json) | 知识竞答 | gameplay | 知识竞答加权出题、聊天快捷作答与经济奖惩结算 | economy, chat |
+| [qq-link](modules/qq-link.json) | QQ绑定与入服 | social | QQ 与 MC 账号绑定、游玩门槛和管理动作同步 | — |
 | [spawn-protect](modules/spawn-protect.json) | 出生保护 | utility | 玩家进服与重生 60 ticks 高阶抗性保护 | — |
 
 旧版 `tps` 与 `scoreboard-sync` 已整合或废弃，不纳入索引；`daily-task` 保持 deferred，暂不收录。
@@ -63,11 +64,11 @@ test/registry.test.mjs              隔离目录中的工具回归测试
 需要 Node.js >= 22.13.0。只安装 Ajv、日期格式与 semver 校验工具，无 workspace 或本地 SDK 依赖。
 
 ```bash
-npm ci
-npm run verify
-npm test
-npm run verify -- --network
-npm run build
+pnpm install --frozen-lockfile
+pnpm run verify
+pnpm test
+pnpm run verify --network
+pnpm run build
 node --test
 ```
 
