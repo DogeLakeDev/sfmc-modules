@@ -2,7 +2,7 @@
   "id": "gamemode-area",
   "name": "区域游戏模式",
   "description": "区域游戏模式切换与背包隔离置换",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "npm": "@sfmc-bds/module-gamemode-area",
   "sdk": ">=0.2.0",
   "license": "ISC",

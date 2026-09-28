@@ -2,7 +2,7 @@
   "id": "inventory-switcher",
   "name": "背包切换",
   "description": "通用背包多槽位快照持久化与原子置换服务",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "npm": "@sfmc-bds/module-inventory-switcher",
   "sdk": ">=0.2.0",
   "license": "ISC",

@@ -2,7 +2,7 @@
   "id": "clean",
   "name": "掉落物清理",
   "description": "区域与全服掉落物预警、倒计时广播与物理回收箱清理",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "npm": "@sfmc-bds/module-clean",
   "sdk": ">=0.2.0",
   "license": "ISC",

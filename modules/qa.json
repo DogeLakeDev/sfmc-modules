@@ -2,7 +2,7 @@
   "id": "qa",
   "name": "知识竞答",
   "description": "知识竞答加权出题、聊天快捷作答与经济奖惩结算，附声明式 UI 控件验收目录",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "npm": "@sfmc-bds/module-qa",
   "sdk": ">=0.2.0",
   "license": "ISC",

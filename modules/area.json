@@ -2,7 +2,7 @@
   "id": "area",
   "name": "空间微内核",
   "description": "空间微内核与 AABB 区域特性调度引擎",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "npm": "@sfmc-bds/module-area",
   "sdk": ">=0.2.0",
   "license": "ISC",

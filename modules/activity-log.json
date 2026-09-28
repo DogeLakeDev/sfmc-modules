@@ -2,7 +2,7 @@
   "id": "activity-log",
   "name": "行为日志",
   "description": "全服原生事件监听与审计日志摄入/多维检索插槽",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "npm": "@sfmc-bds/module-activity-log",
   "sdk": ">=0.2.0",
   "license": "ISC",

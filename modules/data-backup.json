@@ -2,7 +2,7 @@
   "id": "data-backup",
   "name": "数据灾备",
   "description": "世界种子/规则与全服计分板快照灾备（排除 sfmc_money）",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "npm": "@sfmc-bds/module-data-backup",
   "sdk": ">=0.2.0",
   "license": "ISC",

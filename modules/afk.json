@@ -2,7 +2,7 @@
   "id": "afk",
   "name": "挂机检测",
   "description": "纯内存位移挂机判定与原版 Tag 豁免",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "npm": "@sfmc-bds/module-afk",
   "sdk": ">=0.2.0",
   "license": "ISC",

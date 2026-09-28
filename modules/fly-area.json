@@ -2,7 +2,7 @@
   "id": "fly-area",
   "name": "区域飞行",
   "description": "空间进出自动飞行能力赋权与剥离缓降",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "npm": "@sfmc-bds/module-fly-area",
   "sdk": ">=0.2.0",
   "license": "ISC",

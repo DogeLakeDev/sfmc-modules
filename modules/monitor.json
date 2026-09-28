@@ -2,7 +2,7 @@
   "id": "monitor",
   "name": "运行时监控",
   "description": "TPS 逐刻采样环与全服综合负载宏观时序监控",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "npm": "@sfmc-bds/module-monitor",
   "sdk": ">=0.2.0",
   "license": "ISC",

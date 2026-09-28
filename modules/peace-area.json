@@ -2,7 +2,7 @@
   "id": "peace-area",
   "name": "和平区域",
   "description": "区域怪物生成拦截与和平空间保护（友好生物豁免）",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "npm": "@sfmc-bds/module-peace-area",
   "sdk": ">=0.2.0",
   "license": "ISC",

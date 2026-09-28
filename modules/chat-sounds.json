@@ -2,7 +2,7 @@
   "id": "chat-sounds",
   "name": "聊天关键字音效",
   "description": "聊天关键词全服原声音效与冷却防刷",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "npm": "@sfmc-bds/module-chat-sounds",
   "sdk": ">=0.2.0",
   "license": "ISC",
