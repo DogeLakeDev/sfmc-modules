@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generatedAt": "2026-09-28T20:41:47.660Z",
+  "generatedAt": "2026-09-29T12:17:36.498Z",
   "modules": {
     "activity-log": {
       "id": "activity-log",
@@ -42,9 +42,9 @@
       "id": "chat",
       "name": "聊天管道",
       "description": "独占原生聊天流管道，提供拦截器、广播/私聊服务与声明式频道界面",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "npm": "@sfmc-bds/module-chat",
-      "sdk": ">=0.2.0",
+      "sdk": ">=0.2.2",
       "license": "ISC",
       "official": true,
       "category": "social",
@@ -225,18 +225,6 @@
         "economy",
         "chat"
       ]
-    },
-    "qq-link": {
-      "id": "qq-link",
-      "name": "QQ绑定与入服",
-      "description": "SFMC QQ↔MC 绑定 + 入服白名单生效 + 踢人 + 事件上报 + 聊天互通",
-      "version": "0.1.0",
-      "npm": "@sfmc-bds/module-qq-link",
-      "sdk": ">=0.2.0",
-      "license": "ISC",
-      "official": true,
-      "category": "social",
-      "requires": []
     },
     "spawn-protect": {
       "id": "spawn-protect",
