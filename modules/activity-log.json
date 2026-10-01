@@ -2,11 +2,12 @@
   "id": "activity-log",
   "name": "行为日志",
   "description": "全服原生事件监听与审计日志摄入/多维检索插槽",
-  "version": "0.2.2",
   "npm": "@sfmc-bds/module-activity-log",
+  "version": "0.3.0",
   "sdk": ">=0.2.0",
   "license": "ISC",
   "official": true,
-  "category": "system",
-  "requires": []
+  "requires": [],
+  "repo": "https://github.com/DogeLakeDev/sfmc-module-activity-log",
+  "category": "system"
 }
