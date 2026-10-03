@@ -4,7 +4,7 @@
   "description": "现代地产租赁契约（只租不卖）+ 原版三维高亮线框 + 声明式领地界面",
   "version": "0.2.2",
   "npm": "@sfmc-bds/module-land",
-  "sdk": ">=0.2.0",
+  "sdk": ">=0.2.0-beta.17",
   "license": "ISC",
   "official": true,
   "category": "gameplay",
