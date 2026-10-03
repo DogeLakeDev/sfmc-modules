@@ -10,6 +10,8 @@ on:
       - 'package.json'
       - 'pnpm-lock.yaml'
       - '.github/workflows/build-index.yml'
+  schedule:
+    - cron: '17 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -48,14 +50,15 @@ jobs:
             git fetch origin main
             git checkout -B registry-index origin/main
             pnpm install --frozen-lockfile
+            pnpm run sync:npm
             pnpm run verify
             pnpm run build
-            if git diff --quiet -- index.json; then
+            if git diff --quiet -- modules/ index.json; then
               echo 'index.json is already up to date'
               exit 0
             fi
-            git add -- index.json
-            git commit -m 'chore(registry): rebuild index.json'
+            git add -- modules/ index.json
+            git commit -m 'chore(registry): sync npm latest and rebuild index'
             if git push origin HEAD:main; then
               exit 0
             fi

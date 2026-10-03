@@ -11,6 +11,7 @@
   },
   "scripts": {
     "build": "node tools/build-index.mjs",
+    "sync:npm": "node tools/sync-npm.mjs",
     "verify": "node tools/verify.mjs",
     "test": "pnpm run verify"
   },

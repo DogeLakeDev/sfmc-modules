@@ -72,7 +72,7 @@ for (const [label, patch] of [
   ['错误 SDK 范围', { sdk: 'not-a-range' }],
   ['错误 npm 包名', { npm: 'https://example.com/package' }],
   ['缺少必填字段', { name: undefined }],
-  ['空白描述', { description: '  ' }],
+  ['非字符串描述', { description: 123 }],
   ['错误分类', { category: 'other' }],
   ['错误官方标记类型', { official: 'true' }],
   ['重复标签', { tags: ['test', 'test'] }],
@@ -159,4 +159,13 @@ test('联网错误、404、非法响应及包名或版本不符均拒绝', async
       await assert.rejects(checkNetwork({ sample }), /sample:/);
     });
   }
+});
+
+test('允许空描述，仍要求 description 字段为字符串', async (t) => {
+  const f = await fixture(t);
+  await f.put('sample.json', { ...sample, description: '' });
+  const result = f.run('verify.mjs');
+  assert.equal(result.status, 0, result.stderr);
+  await f.put('sample.json', { ...sample, description: undefined });
+  assert.equal(f.run('verify.mjs').status, 1);
 });
