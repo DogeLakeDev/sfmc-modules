@@ -42,3 +42,13 @@ sfmc mod install <id>
 `verify` 验证分片和待生成的索引，允许 PR 中已发布的 `index.json` 暂时落后。`--network` 额外检查公共 npm 上包名与精确版本；每个请求超时 15 秒，最多并发 4 个，不下载或执行模块。
 
 本仓库保留现有 [AGPL-3.0-only 许可证](LICENSE)；各模块的许可证以清单及模块自身许可证为准。
+
+## 版本自动同步
+
+首次收录和展示信息仍编辑 `modules/<id>.json` 并通过 PR 审核。已收录模块的版本与 SDK 兼容范围由索引仓从公共 npm 的 `latest` 自动读取，模块仓和平台发布 CI 不再提交版本 PR。
+
+**Publish registry index** 在 main 元数据变更时及每小时执行，也支持手动运行。同步后直接提交分片和聚合索引；无变化时不产生提交。可用 `pnpm run sync:npm --dry-run` 预览，或运行 `pnpm run sync:npm` 后再执行 `pnpm run verify` 和 `pnpm run build`。同步只修改 `version`、`sdk`，保留展示信息与已审核的模块依赖。
+
+每次请求超时 15 秒，最多并发 4 个。网络错误、包名不符、无效 SDK 范围、已发布版本的降版、已弃用版本或预发布 latest 会使同步失败，校验完成前不写文件，CI 不发布失败结果。测试版本应发布到 beta 等独立 dist-tag。
+
+若旧索引登记的版本高于 npm latest，仅当 npm 明确返回该旧版本不存在（404）时，自动纠正为实际发布版本；网络错误或权限错误不能触发纠正。

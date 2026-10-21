@@ -43,7 +43,7 @@
 | --- | --- | --- |
 | `id` | 是 | `^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$`，文件名严格等于 `<id>.json` |
 | `name` | 是 | 非空、不能只有空白的展示名称 |
-| `description` | 是 | 非空的真实功能说明 |
+| `description` | 是 | 字符串，允许为空 |
 | `version` | 是 | 严格 SemVer，支持 prerelease/build metadata，例如 `1.0.0-beta.1`；不接受 `v1.0.0`、`latest` 或范围 |
 | `npm` | 是 | 合法包名，支持 `@scope/name`；最大 214 字符，无 URL、版本后缀或本地路径 |
 | `sdk` | 是 | 非空的 npm semver 范围，例如 `>=0.2.0`、`^0.2.0`；工具向 Ajv 注册 `semver-range` 格式 |
@@ -72,7 +72,7 @@ CI 使用锁文件驱动的 `pnpm install --frozen-lockfile` 保证依赖一致�
 
 默认校验离线执行，检查每个分片、文件名、ID 唯一性、依赖及待生成索引的 Schema。`--network` 检查全部清单对应的精确 npm 版本，验证响应的包名与版本；404、超时、服务端错误、非法响应或包名/版本不符均返回非零退出码。请求固定发送到公共 npm 源，最多并发 4 个，每个超时 15 秒。
 
-向 `main` 提交 PR：通常只添加或更新你自己的 `modules/<id>.json`。PR 说明提供模块源码地址、npm 包和版本、许可证、SDK 兼容性及校验结果。更新已有模块同样须先发布新版本，再更新清单。
+向 `main` 提交 PR：通常只添加或更新你自己的 `modules/<id>.json`。PR 说明提供模块源码地址、npm 包和版本、许可证、SDK 兼容性及校验结果。已收录模块发布新版本后，由索引仓从 npm 自动同步版本；展示信息或模块依赖调整仍提交元数据 PR。
 
 **不要把生成的 `index.json` 加入常规模块 PR。** 如需本地预览，可运行 `pnpm run build`，但只暂存自己的分片。验证不会要求现有聚合索引与分片相等，因此多个作者无需争抢同一聚合文件。PR 门禁还运行 `node --test` 和一次实际构建。
 
@@ -85,3 +85,13 @@ CI 使用锁文件驱动的 `pnpm install --frozen-lockfile` 保证依赖一致�
 维护者应将 **Verify registry PR / verify** 配置为必需检查；允许发布机器人写入 main，并检查分支保护规则。工作流的 `contents: write` 不能覆盖禁止直接推送的规则。首次发布后检查 Actions 日志与根目录索引，必要时在 main 手动运行 **Publish registry index**。当前工作流不会发布 npm 包。
 
 工具变更需额外运行 `node --test`，覆盖非法输入、失败不覆盖原索引、重复构建稳定性与网络错误等场景。Schema 若改变了 CLI 读取字段，必须同时验证现行 CLI 解析器兼容性。
+
+## 版本自动同步
+
+首次收录和展示信息仍编辑 `modules/<id>.json` 并通过 PR 审核。已收录模块的版本与 SDK 兼容范围由索引仓从公共 npm 的 `latest` 自动读取，模块仓和平台发布 CI 不再提交版本 PR。
+
+**Publish registry index** 在 main 元数据变更时及每小时执行，也支持手动运行。同步后直接提交分片和聚合索引；无变化时不产生提交。可用 `pnpm run sync:npm --dry-run` 预览，或运行 `pnpm run sync:npm` 后再执行 `pnpm run verify` 和 `pnpm run build`。同步只修改 `version`、`sdk`，保留展示信息与已审核的模块依赖。
+
+每次请求超时 15 秒，最多并发 4 个。网络错误、包名不符、无效 SDK 范围、已发布版本的降版、已弃用版本或预发布 latest 会使同步失败，校验完成前不写文件，CI 不发布失败结果。测试版本应发布到 beta 等独立 dist-tag。
+
+若旧索引登记的版本高于 npm latest，仅当 npm 明确返回该旧版本不存在（404）时，自动纠正为实际发布版本；网络错误或权限错误不能触发纠正。

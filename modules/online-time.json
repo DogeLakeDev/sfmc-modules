@@ -4,7 +4,7 @@
   "description": "进服打点与心跳增量结转在线统计，个人统计页由声明式 JSON 打开",
   "version": "0.2.2",
   "npm": "@sfmc-bds/module-online-time",
-  "sdk": ">=0.2.0",
+  "sdk": ">=0.2.0-beta.17",
   "license": "ISC",
   "official": true,
   "category": "utility",
