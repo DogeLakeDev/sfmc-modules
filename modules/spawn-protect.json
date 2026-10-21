@@ -1,12 +1,13 @@
 {
   "id": "spawn-protect",
   "name": "出生保护",
-  "description": "玩家进服与重生 60 ticks 高阶抗性保护",
+  "description": "",
   "version": "0.2.1",
   "npm": "@sfmc-bds/module-spawn-protect",
   "sdk": ">=0.2.0",
   "license": "ISC",
   "official": true,
   "category": "utility",
-  "requires": []
+  "requires": [],
+  "repo": "https://github.com/Tanya7z/sfmc-module-spawn-protect"
 }

@@ -11,5 +11,6 @@
   "requires": [
     "area",
     "inventory-switcher"
-  ]
+  ],
+  "repo": "https://github.com/Tanya7z/sfmc-module-gamemode-area"
 }

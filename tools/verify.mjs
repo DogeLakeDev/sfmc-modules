@@ -23,8 +23,8 @@ export function checkIndex(index) {
   }
 }
 
-export async function loadModules() {
-  const entries = await readdir(path.join(root, 'modules'), { withFileTypes: true });
+export async function loadModules(directory = root) {
+  const entries = await readdir(path.join(directory, 'modules'), { withFileTypes: true });
   const errors = [];
   const modules = new Map();
   for (const entry of entries.sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0)) {
@@ -34,7 +34,7 @@ export async function loadModules() {
       continue;
     }
     try {
-      const module = await readJson(path.join(root, label));
+      const module = await readJson(path.join(directory, label));
       if (!validateModule(module)) errors.push(`${label}: ${ajv.errorsText(validateModule.errors)}`);
       if (module && typeof module.id === 'string') {
         if (entry.name !== `${module.id}.json`) errors.push(`${label}: filename must be ${module.id}.json`);

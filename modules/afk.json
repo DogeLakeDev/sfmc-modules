@@ -1,12 +1,13 @@
 {
   "id": "afk",
-  "name": "挂机检测",
-  "description": "纯内存位移挂机判定与原版 Tag 豁免",
+  "name": "afk",
+  "description": "",
   "version": "0.3.0",
   "npm": "@sfmc-bds/module-afk",
   "sdk": ">=0.2.0",
   "license": "ISC",
   "official": true,
   "category": "utility",
-  "requires": []
+  "requires": [],
+  "repo": "https://github.com/DogeLakeDev/sfmc-module-afk"
 }

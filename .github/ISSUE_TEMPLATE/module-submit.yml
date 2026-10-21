@@ -1,0 +1,64 @@
+name: 申请收录或更新模块
+description: 已发布 npm 包后填写；机器人校验并创建可审核的索引 PR。
+title: "[模块收录] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请先发布公共 npm 精确版本。这里只提交元数据，不执行你的源码。
+        首次收录默认第三方身份，维护者审核后合并。
+  - type: input
+    id: npm
+    attributes:
+      label: npm 包名
+      placeholder: "@your-scope/module-example"
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: 精确版本
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: id
+    attributes:
+      label: 模块 ID
+      placeholder: example-module
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: 展示名称
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 功能介绍
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: 分类
+      options: [utility, gameplay, system, economy, social]
+    validations:
+      required: true
+  - type: input
+    id: requires
+    attributes:
+      label: 依赖模块 ID
+      description: 用英文逗号分隔；无依赖可留空。
+  - type: input
+    id: tags
+    attributes:
+      label: 标签
+      description: 用英文逗号分隔；可留空。
+  - type: input
+    id: authors
+    attributes:
+      label: 公开作者署名
+      description: 用英文逗号分隔；可留空。

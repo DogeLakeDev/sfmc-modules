@@ -1,7 +1,7 @@
 {
   "id": "coop",
   "name": "合作社",
-  "description": "合作社组织治理与公账划转托管，界面由声明式 JSON 页面打开",
+  "description": "",
   "version": "0.2.2",
   "npm": "@sfmc-bds/module-coop",
   "sdk": ">=0.2.0-beta.17",
@@ -11,5 +11,6 @@
   "requires": [
     "economy",
     "activity-log"
-  ]
+  ],
+  "repo": "https://github.com/Tanya7z/sfmc-module-coop"
 }

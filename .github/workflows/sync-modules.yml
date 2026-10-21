@@ -1,0 +1,86 @@
+name: Sync module metadata
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'modules/**'
+      - 'schemas/**'
+      - 'tools/**'
+      - 'test/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/sync-modules.yml'
+  schedule:
+    - cron: '17 * * * *'
+  repository_dispatch:
+    types: [module-published]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '仅预览，不写入或提交索引'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-module-metadata
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    env:
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+      DRY_RUN: ${{ inputs.dry_run || false }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.8.0
+          run_install: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: pnpm
+      - name: Validate, sync and publish
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            # 推送冲突时基于最新分片重新同步，不覆盖其他维护者的修改。
+            git fetch origin "$DEFAULT_BRANCH"
+            git checkout -B registry-index "origin/$DEFAULT_BRANCH"
+            pnpm install --frozen-lockfile
+            pnpm test
+            if [ "$DRY_RUN" = true ]; then
+              pnpm run sync:npm --dry-run
+              exit 0
+            fi
+            pnpm run sync:npm
+            pnpm run verify
+            pnpm run build
+            if git diff --quiet -- modules/ index.json; then
+              echo 'Module metadata is already up to date'
+              exit 0
+            fi
+            git add -- modules/ index.json
+            git commit -m 'chore(registry): sync published module metadata'
+            if git push origin "HEAD:refs/heads/$DEFAULT_BRANCH"; then
+              exit 0
+            fi
+            echo "Publish attempt ${attempt} failed; retrying from latest $DEFAULT_BRANCH"
+          done
+          echo 'Unable to publish index after 3 attempts' >&2
+          exit 1

@@ -1,0 +1,71 @@
+name: Submit module request
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: 重试模块申请的 issue 编号
+        required: true
+        type: number
+
+permissions:
+  contents: read
+  issues: read
+
+concurrency:
+  group: module-request-${{ github.event.issue.number || inputs.issue }}
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[模块收录]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: DogeLakeDev/ScriptsForMinecraftServer
+          ref: main
+          path: platform
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.8.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: 构建共用工具
+        working-directory: platform
+        run: |
+          pnpm install --frozen-lockfile --filter '@sfmc-bds/devkit...'
+          node packages/tools/build-publishable.mjs --workspace @sfmc-bds/devkit
+      - name: 读取重试申请
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ inputs.issue }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER" > "$RUNNER_TEMP/module-issue.json"
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const issue = JSON.parse(fs.readFileSync(`${process.env.RUNNER_TEMP}/module-issue.json`, 'utf8'));
+          fs.writeFileSync(`${process.env.RUNNER_TEMP}/module-event.json`, JSON.stringify({ issue }));
+          fs.appendFileSync(process.env.GITHUB_ENV, `SUBMISSION_EVENT_PATH=${process.env.RUNNER_TEMP}/module-event.json\n`);
+          JS
+      - name: 生成索引 PR
+        env:
+          GH_TOKEN: ${{ secrets.REGISTRY_SUBMIT_TOKEN }}
+          SFMC_TOOL_ROOT: ${{ github.workspace }}/platform/packages/devkit
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo '::error::请配置 REGISTRY_SUBMIT_TOKEN（索引仓 Contents / Pull requests / Issues 写权限）'
+            exit 1
+          fi
+          node tools/submit-issue.mjs

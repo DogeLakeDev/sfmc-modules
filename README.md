@@ -1,54 +1,76 @@
-# SFMC 模块索引库
+# SFMC 模块索引
 
-[贡献指南](CONTRIBUTING.md)
+收录 SFMC 官方与第三方模块的 npm 包、已发布版本和 SDK 兼容信息。模块源码在各自仓库维护，本仓库不构建或发布模块。
 
-本仓库是 ScriptsForMinecraftServer（SFMC）的纯元数据索引中心（Pure Registry Index Hub）。模块业务代码在各自独立仓维护，安装包通过 npm 分发；本仓库只维护发现、版本与兼容性元数据，以及索引构建工具。
+```text
+modules/    每个模块一份 <id>.json，新增与人工维护的入口
+index.json  自动生成的 v2 聚合索引，供 SFMC CLI 读取
+schemas/    模块与索引的 JSON Schema
+tools/      同步、校验、构建及 Issue 收录工具
+test/       索引与同步测试
+.github/    收录表单、PR 校验和自动同步 workflow
+```
 
-采用 Homebrew-core 式的独立条目贡献与 Cargo Index 式的集中发现思路：`modules/<id>.json` 是唯一编辑来源，根目录 `index.json` 是供现行 CLI 获取的聚合产物。不同模块的 PR 可独立修改分片，合并后由 Actions 更新聚合文件。
-
-## 搜索与安装
-
-在已安装 SFMC CLI 的环境中执行：
+## 使用与维护
 
 ```bash
 sfmc mod search
 sfmc mod install afk
-sfmc mod install <id>
+
+# 维护本仓库：Node.js >= 22.13.0，pnpm 10.8.0
+pnpm install --frozen-lockfile
+pnpm test                    # 离线校验及测试
+pnpm run sync:npm --dry-run   # 预览公共 npm 元数据变化
+pnpm run sync:npm             # 更新模块分片
+pnpm run build                # 重建 index.json
+pnpm run verify --network     # 核对分片中的精确 npm 版本
 ```
 
-## 模块
+`modules/<id>.json` 是唯一输入；不要直接维护 `index.json`。聚合索引保持现有 v2 格式与 ID 排序，无变化时保留 `generatedAt`，重复运行不产生无意义提交。已并入平台的模块应删除分片，不在构建工具内维护排除名单。
 
-| ID / 清单                                             | 名称           | 分类     | 功能概览                                                      | requires                 |
-| ----------------------------------------------------- | -------------- | -------- | ------------------------------------------------------------- | ------------------------ |
-| [activity-log](modules/activity-log.json)             | 行为日志       | system   | 全服原生事件监听与审计日志摄入/多维检索插槽                   | —                        |
-| [afk](modules/afk.json)                               | 挂机检测       | utility  | 纯内存位移挂机判定与原版 Tag 豁免                             | —                        |
-| [area](modules/area.json)                             | 空间微内核     | system   | 空间微内核与 AABB 区域特性调度引擎                            | —                        |
-| [chat-sounds](modules/chat-sounds.json)               | 聊天关键字音效 | social   | 聊天关键词全服原声音效与冷却防刷                              | chat                     |
-| [chat](modules/chat.json)                             | 聊天管道       | social   | 独占原生聊天流管道，提供拦截器与广播/私聊服务                 | economy                  |
-| [clean](modules/clean.json)                           | 掉落物清理     | utility  | 区域与全服掉落物预警、倒计时广播与物理回收箱清理              | area                     |
-| [coop](modules/coop.json)                             | 合作社         | social   | 合作社组织治理与公账划转托管                                  | economy, activity-log    |
-| [data-backup](modules/data-backup.json)               | 数据灾备       | system   | 世界种子/规则与全服计分板快照灾备（排除 sfmc_money）          | —                        |
-| [economy](modules/economy.json)                       | 经济系统       | economy  | 计分板权威余额 + DB 流水留档 + 两阶段转账中枢                 | —                        |
-| [fly-area](modules/fly-area.json)                     | 区域飞行       | gameplay | 空间进出自动飞行能力赋权与剥离缓降                            | area                     |
-| [gamemode-area](modules/gamemode-area.json)           | 区域游戏模式   | gameplay | 区域游戏模式切换与背包隔离置换                                | area, inventory-switcher |
-| [inventory-switcher](modules/inventory-switcher.json) | 背包切换       | system   | 通用背包多槽位快照持久化与原子置换服务                        | —                        |
-| [land](modules/land.json)                             | 领地庄园       | gameplay | 现代地产租赁契约（只租不卖）+ 原版三维高亮线框 + 商业门票造血 | economy, activity-log    |
-| [monitor](modules/monitor.json)                       | 运行时监控     | system   | TPS 逐刻采样环与全服综合负载宏观时序监控                      | —                        |
-| [online-time](modules/online-time.json)               | 在线时长统计   | utility  | 进服打点与心跳增量结转在线统计与多维排行榜                    | —                        |
-| [peace-area](modules/peace-area.json)                 | 和平区域       | gameplay | 区域怪物生成拦截与和平空间保护（友好生物豁免）                | area                     |
-| [qa](modules/qa.json)                                 | 知识竞答       | gameplay | 知识竞答加权出题、聊天快捷作答与经济奖惩结算                  | economy, chat            |
-| [spawn-protect](modules/spawn-protect.json)           | 出生保护       | utility  | 玩家进服与重生 60 ticks 高阶抗性保护                          | —                        |
+## 自动同步
 
-`verify` 验证分片和待生成的索引，允许 PR 中已发布的 `index.json` 暂时落后。`--network` 额外检查公共 npm 上包名与精确版本；每个请求超时 15 秒，最多并发 4 个，不下载或执行模块。
+[Sync module metadata](.github/workflows/sync-modules.yml) 每小时第 17 分钟运行；main 上相关文件变更、手动运行或 `repository_dispatch: module-published` 也会触发。手动运行可选择 `dry_run`，只输出预览。
 
-本仓库保留现有 [AGPL-3.0-only 许可证](LICENSE)；各模块的许可证以清单及模块自身许可证为准。
+同步以公共 npm 的 `latest` 为准，读取每个已收录包的：
 
-## 版本自动同步
+| 自动同步字段 | 来源 |
+| --- | --- |
+| `version` | 已发布包的 `version` |
+| `sdk` | `peerDependencies["@sfmc-bds/sdk"]` |
+| `license` | `license` |
+| `repo` | `repository`，转换为 HTTPS 源码地址；发布包省略时保留原值 |
 
-首次收录和展示信息仍编辑 `modules/<id>.json` 并通过 PR 审核。已收录模块的版本与 SDK 兼容范围由索引仓从公共 npm 的 `latest` 自动读取，模块仓和平台发布 CI 不再提交版本 PR。
+`npm` 与 `id` 是关联键；名称、说明、分类、依赖、标签、作者和 `official` 由维护者审核。同步不会把源码分支中尚未发布的版本写入索引，也不会执行模块代码。
 
-**Publish registry index** 在 main 元数据变更时及每小时执行，也支持手动运行。同步后直接提交分片和聚合索引；无变化时不产生提交。可用 `pnpm run sync:npm --dry-run` 预览，或运行 `pnpm run sync:npm` 后再执行 `pnpm run verify` 和 `pnpm run build`。同步只修改 `version`、`sdk`，保留展示信息与已审核的模块依赖。
+请求仅发送到 `registry.npmjs.org`，每次超时 15 秒、最多并发 4 个。任一请求失败、包名不符、版本/SDK/许可证无效、latest 为预发布或已弃用版本，整次同步都失败，保留原分片。禁止降低已发布版本；只有旧版本明确返回 404 时才纠正提前登记的版本。
 
-每次请求超时 15 秒，最多并发 4 个。网络错误、包名不符、无效 SDK 范围、已发布版本的降版、已弃用版本或预发布 latest 会使同步失败，校验完成前不写文件，CI 不发布失败结果。测试版本应发布到 beta 等独立 dist-tag。
+所有响应验证成功后再写分片，随后校验、构建并提交 `modules/` 和 `index.json`；没有变化时不提交。并发推送冲突会基于最新默认分支重新同步，最多三次，不强制推送。Actions 摘要列出字段变化。
 
-若旧索引登记的版本高于 npm latest，仅当 npm 明确返回该旧版本不存在（404）时，自动纠正为实际发布版本；网络错误或权限错误不能触发纠正。
+普通自动同步仅使用本仓库的 `GITHUB_TOKEN`，无需额外 secret。仓库需允许 Actions 写入 Contents，并允许机器人向默认分支推送；分支保护若禁止此操作，需由维护者配置规则。workflow 合并到默认分支后，定时与外部事件触发才会生效。
+
+## 收录模块
+
+先将模块发布到公共 npm，再创建 `modules/<id>.json` 并提交 PR：
+
+```json
+{
+  "id": "example",
+  "name": "示例模块",
+  "description": "模块提供的功能",
+  "version": "1.0.0",
+  "npm": "@your-scope/module-example",
+  "sdk": ">=0.2.0",
+  "license": "MIT",
+  "official": false,
+  "repo": "https://github.com/your-account/module-example",
+  "category": "utility",
+  "requires": []
+}
+```
+
+文件名必须与 `id` 一致，版本必须是严格 SemVer。`requires` 仅填写已收录的模块 ID，不允许自依赖、未知依赖或循环依赖。可选 `category` 为 `gameplay`、`utility`、`system`、`economy`、`social`；可选 `tags` 与 `authors` 是不重复的非空字符串数组。第三方模块使用 `official: false`，官方身份须人工确认。完整规则见 [模块 Schema](schemas/registry-module.schema.json) 与 [索引 Schema](schemas/registry-index.schema.json)。
+
+也可在模块仓运行 `sfmc mod submit --dry-run` / `sfmc mod submit`，或使用仓库的“申请收录或更新模块”Issue 表单。表单机器人保留独立的 [Submit module request](.github/workflows/submit-issue.yml) 流程；维护者需配置本仓 Contents / Pull requests / Issues 写权限的 `REGISTRY_SUBMIT_TOKEN`，用于创建可触发 PR 校验的收录 PR。工具接入见 [发布指南](https://github.com/DogeLakeDev/ScriptsForMinecraftServer/blob/main/docs/zh/dev/publish.md)。
+
+模块 PR 通常只提交分片；合并后由同步 workflow 更新聚合索引。工具变更应通过 `pnpm test` 和 `pnpm run build`。本仓库沿用 [AGPL-3.0-only](LICENSE)，模块许可证以各自发布包为准。
