@@ -1,12 +1,13 @@
 {
   "id": "area",
-  "name": "空间微内核",
-  "description": "空间微内核与 AABB 区域特性调度引擎",
+  "name": "area",
+  "description": "区域特性调度引擎",
   "version": "0.2.1",
   "npm": "@sfmc-bds/module-area",
   "sdk": ">=0.2.0",
   "license": "ISC",
   "official": true,
   "category": "system",
-  "requires": []
+  "requires": [],
+  "repo": "https://github.com/Tanya7z/sfmc-module-area"
 }

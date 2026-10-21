@@ -10,5 +10,6 @@
   "category": "utility",
   "requires": [
     "area"
-  ]
+  ],
+  "repo": "https://github.com/Tanya7z/sfmc-module-clean"
 }

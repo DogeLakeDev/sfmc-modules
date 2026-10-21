@@ -8,5 +8,6 @@
   "license": "ISC",
   "official": true,
   "category": "system",
-  "requires": []
+  "requires": [],
+  "repo": "https://github.com/Tanya7z/sfmc-module-inventory-switcher"
 }
