@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generatedAt": "2026-10-21T15:19:22.987Z",
+  "generatedAt": "2026-10-22T05:16:51.445Z",
   "modules": {
     "activity-log": {
       "id": "activity-log",
@@ -203,7 +203,7 @@
       "id": "peace-area",
       "name": "和平区域",
       "description": "区域怪物生成拦截",
-      "version": "0.2.1",
+      "version": "1.0.0",
       "npm": "@sfmc-bds/module-peace-area",
       "sdk": ">=0.2.0",
       "license": "ISC",
@@ -212,7 +212,7 @@
       "requires": [
         "area"
       ],
-      "repo": "https://github.com/Tanya7z/sfmc-module-peace-area"
+      "repo": "https://github.com/DogeLakeDev/sfmc-module-peace-area"
     },
     "qa": {
       "id": "qa",
