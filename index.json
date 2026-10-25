@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "generatedAt": "2026-10-25T13:07:10.953Z",
+  "generatedAt": "2026-10-25T14:07:27.574Z",
   "modules": {
     "activity-log": {
       "id": "activity-log",
       "name": "行为日志",
       "description": "",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "npm": "@sfmc-bds/module-activity-log",
       "sdk": ">=0.2.0",
       "license": "ISC",
