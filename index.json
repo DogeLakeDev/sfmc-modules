@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generatedAt": "2026-10-22T05:16:51.445Z",
+  "generatedAt": "2026-10-25T11:28:43.498Z",
   "modules": {
     "activity-log": {
       "id": "activity-log",
@@ -190,14 +190,14 @@
       "id": "online-time",
       "name": "在线时长统计",
       "description": "进服打点与心跳增量结转在线统计",
-      "version": "0.2.2",
+      "version": "1.0.0",
       "npm": "@sfmc-bds/module-online-time",
       "sdk": ">=0.2.0-beta.17",
       "license": "ISC",
       "official": true,
       "category": "utility",
       "requires": [],
-      "repo": "https://github.com/Tanya7z/sfmc-module-online-time"
+      "repo": "https://github.com/DogeLakeDev/sfmc-module-online-time"
     },
     "peace-area": {
       "id": "peace-area",
