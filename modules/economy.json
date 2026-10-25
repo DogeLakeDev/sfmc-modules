@@ -2,12 +2,12 @@
   "id": "economy",
   "name": "经济系统",
   "description": "",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "npm": "@sfmc-bds/module-economy",
   "sdk": ">=0.2.0",
   "license": "ISC",
   "official": true,
   "category": "economy",
   "requires": [],
-  "repo": "https://github.com/Tanya7z/sfmc-module-economy"
+  "repo": "https://github.com/DogeLakeDev/sfmc-module-economy"
 }

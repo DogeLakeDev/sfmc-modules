@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generatedAt": "2026-10-25T11:28:43.498Z",
+  "generatedAt": "2026-10-25T13:07:10.953Z",
   "modules": {
     "activity-log": {
       "id": "activity-log",
@@ -117,14 +117,14 @@
       "id": "economy",
       "name": "经济系统",
       "description": "",
-      "version": "0.2.1",
+      "version": "0.3.0",
       "npm": "@sfmc-bds/module-economy",
       "sdk": ">=0.2.0",
       "license": "ISC",
       "official": true,
       "category": "economy",
       "requires": [],
-      "repo": "https://github.com/Tanya7z/sfmc-module-economy"
+      "repo": "https://github.com/DogeLakeDev/sfmc-module-economy"
     },
     "fly-area": {
       "id": "fly-area",
