@@ -2,7 +2,7 @@
   "id": "activity-log",
   "name": "行为日志",
   "description": "",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "npm": "@sfmc-bds/module-activity-log",
   "sdk": ">=0.2.0",
   "license": "ISC",

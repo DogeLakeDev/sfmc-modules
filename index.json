@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "generatedAt": "2026-10-25T14:07:27.574Z",
+  "generatedAt": "2026-10-28T08:31:38.278Z",
   "modules": {
     "activity-log": {
       "id": "activity-log",
       "name": "行为日志",
       "description": "",
-      "version": "0.3.1",
+      "version": "0.3.2",
       "npm": "@sfmc-bds/module-activity-log",
       "sdk": ">=0.2.0",
       "license": "ISC",
@@ -19,7 +19,7 @@
       "id": "afk",
       "name": "afk",
       "description": "",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "npm": "@sfmc-bds/module-afk",
       "sdk": ">=0.2.0",
       "license": "ISC",
@@ -32,14 +32,14 @@
       "id": "area",
       "name": "area",
       "description": "区域特性调度引擎",
-      "version": "0.2.1",
+      "version": "0.3.0",
       "npm": "@sfmc-bds/module-area",
       "sdk": ">=0.2.0",
       "license": "ISC",
       "official": true,
       "category": "system",
       "requires": [],
-      "repo": "https://github.com/Tanya7z/sfmc-module-area"
+      "repo": "https://github.com/DogeLakeDev/sfmc-module-area"
     },
     "chat": {
       "id": "chat",
@@ -117,7 +117,7 @@
       "id": "economy",
       "name": "经济系统",
       "description": "",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "npm": "@sfmc-bds/module-economy",
       "sdk": ">=0.2.0",
       "license": "ISC",
@@ -174,7 +174,7 @@
       "id": "land",
       "name": "领地",
       "description": "",
-      "version": "1.0.0",
+      "version": "1.2.0",
       "npm": "@sfmc-bds/module-land",
       "sdk": ">=0.5.0",
       "license": "ISC",
@@ -190,7 +190,7 @@
       "id": "online-time",
       "name": "在线时长统计",
       "description": "进服打点与心跳增量结转在线统计",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "npm": "@sfmc-bds/module-online-time",
       "sdk": ">=0.2.0-beta.17",
       "license": "ISC",
@@ -203,7 +203,7 @@
       "id": "peace-area",
       "name": "和平区域",
       "description": "区域怪物生成拦截",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "npm": "@sfmc-bds/module-peace-area",
       "sdk": ">=0.2.0",
       "license": "ISC",
@@ -234,14 +234,14 @@
       "id": "spawn-protect",
       "name": "出生保护",
       "description": "",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "npm": "@sfmc-bds/module-spawn-protect",
       "sdk": ">=0.2.0",
       "license": "ISC",
       "official": true,
       "category": "utility",
       "requires": [],
-      "repo": "https://github.com/Tanya7z/sfmc-module-spawn-protect"
+      "repo": "https://github.com/DogeLakeDev/sfmc-module-spawn-protect"
     }
   }
 }

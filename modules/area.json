@@ -2,12 +2,12 @@
   "id": "area",
   "name": "area",
   "description": "区域特性调度引擎",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "npm": "@sfmc-bds/module-area",
   "sdk": ">=0.2.0",
   "license": "ISC",
   "official": true,
   "category": "system",
   "requires": [],
-  "repo": "https://github.com/Tanya7z/sfmc-module-area"
+  "repo": "https://github.com/DogeLakeDev/sfmc-module-area"
 }

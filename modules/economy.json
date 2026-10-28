@@ -2,7 +2,7 @@
   "id": "economy",
   "name": "经济系统",
   "description": "",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "npm": "@sfmc-bds/module-economy",
   "sdk": ">=0.2.0",
   "license": "ISC",

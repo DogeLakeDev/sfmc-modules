@@ -2,12 +2,12 @@
   "id": "spawn-protect",
   "name": "出生保护",
   "description": "",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "npm": "@sfmc-bds/module-spawn-protect",
   "sdk": ">=0.2.0",
   "license": "ISC",
   "official": true,
   "category": "utility",
   "requires": [],
-  "repo": "https://github.com/Tanya7z/sfmc-module-spawn-protect"
+  "repo": "https://github.com/DogeLakeDev/sfmc-module-spawn-protect"
 }
